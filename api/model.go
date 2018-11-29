@@ -6,8 +6,8 @@
 package api
 
 import (
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/model"
 	"gitlab.yeeyuntech.com/yee/easyweb"
+	"gitlab.yeeyuntech.com/yee/easyweb_cms/model"
 )
 
 type Model_Api struct {

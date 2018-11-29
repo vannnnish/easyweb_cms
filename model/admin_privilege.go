@@ -6,11 +6,11 @@
 package model
 
 import (
+	"errors"
 	"github.com/yeeyuntech/yeego"
 	"github.com/yeeyuntech/yeego/yeeStrings"
-	"strings"
-	"errors"
 	"gitlab.yeeyuntech.com/yee/easyweb"
+	"strings"
 )
 
 // 一些默认的操作

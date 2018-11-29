@@ -6,9 +6,9 @@
 package route
 
 import (
+	"github.com/yeeyuntech/yeego"
 	"gitlab.yeeyuntech.com/yee/easyweb"
 	"gitlab.yeeyuntech.com/yee/easyweb_cms/api"
-	"github.com/yeeyuntech/yeego"
 )
 
 func InitRoute(web *easyweb.EasyWeb, dispatchMap map[string]map[int]easyweb.HandlerFunc) {

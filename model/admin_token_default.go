@@ -6,10 +6,10 @@
 package model
 
 import (
-	"time"
+	"errors"
 	"github.com/yeeyuntech/yeego/yeeTime"
 	"gitlab.yeeyuntech.com/yee/easyweb"
-	"errors"
+	"time"
 )
 
 // 后台管理员token

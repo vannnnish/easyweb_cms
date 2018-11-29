@@ -6,11 +6,11 @@
 package api
 
 import (
-	"gitlab.yeeyuntech.com/yee/easyweb"
-	"sync"
 	"encoding/json"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/conf"
 	"github.com/yeeyuntech/yeego"
+	"gitlab.yeeyuntech.com/yee/easyweb"
+	"gitlab.yeeyuntech.com/yee/easyweb_cms/conf"
+	"sync"
 )
 
 type Ueditor_Api struct {

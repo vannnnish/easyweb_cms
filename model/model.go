@@ -6,13 +6,13 @@
 package model
 
 import (
-	"errors"
-	"gitlab.yeeyuntech.com/yee/easyweb"
-	"github.com/yeeyuntech/yeego/yeeStrconv"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/conf"
-	"github.com/yeeyuntech/yeego/yeeCache"
-	"time"
 	"encoding/json"
+	"errors"
+	"github.com/yeeyuntech/yeego/yeeCache"
+	"github.com/yeeyuntech/yeego/yeeStrconv"
+	"gitlab.yeeyuntech.com/yee/easyweb"
+	"gitlab.yeeyuntech.com/yee/easyweb_cms/conf"
+	"time"
 )
 
 // 模型信息

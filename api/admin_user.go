@@ -6,12 +6,12 @@
 package api
 
 import (
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/model"
-	"gitlab.yeeyuntech.com/yee/easyweb"
 	"github.com/yeeyuntech/yeego"
 	"github.com/yeeyuntech/yeego/yeeCrypto"
 	"github.com/yeeyuntech/yeego/yeeStrconv"
+	"gitlab.yeeyuntech.com/yee/easyweb"
 	"gitlab.yeeyuntech.com/yee/easyweb_cms/conf"
+	"gitlab.yeeyuntech.com/yee/easyweb_cms/model"
 )
 
 type AdminUser_Api struct {
@@ -163,7 +163,7 @@ func (adminUser AdminUser_Api) ResetPassword() easyweb.HandlerFunc {
 			c.FailWithDefaultCode(err.Error())
 			return
 		}
-		pwd := yeeCrypto.Sha256Hex([]byte( yeego.Config.GetString("app.DefaultPassword")))
+		pwd := yeeCrypto.Sha256Hex([]byte(yeego.Config.GetString("app.DefaultPassword")))
 		if err := adminUser.AdminUserModel.ResetPassword(adminUserId, pwd); err != nil {
 			c.FailWithDefaultCode(err.Error())
 			return

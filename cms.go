@@ -6,19 +6,19 @@
 package easyweb_cms
 
 import (
+	"fmt"
+	"github.com/BurntSushi/toml"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"fmt"
+	"github.com/yeeyuntech/yeego"
+	"github.com/yeeyuntech/yeego/yeeCrypto"
+	"github.com/yeeyuntech/yeego/yeeStrconv"
+	"gitlab.yeeyuntech.com/yee/easyweb"
+	"gitlab.yeeyuntech.com/yee/easyweb_cms/conf"
 	"gitlab.yeeyuntech.com/yee/easyweb_cms/model"
+	"gitlab.yeeyuntech.com/yee/easyweb_cms/route"
 	"io"
 	"log"
-	"github.com/yeeyuntech/yeego/yeeCrypto"
-	"gitlab.yeeyuntech.com/yee/easyweb"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/route"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/conf"
-	"github.com/yeeyuntech/yeego"
-	"github.com/BurntSushi/toml"
-	"github.com/yeeyuntech/yeego/yeeStrconv"
 )
 
 var defaultDB *gorm.DB

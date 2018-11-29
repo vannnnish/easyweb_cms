@@ -6,33 +6,32 @@
 package api
 
 import (
-	"gitlab.yeeyuntech.com/yee/easyweb"
-	"github.com/yeeyuntech/yeego"
-	"fmt"
-	"path/filepath"
-	"github.com/yeeyuntech/yeego/yeeStrings"
-	"strings"
-	"github.com/yeeyuntech/yeego/yeeCrypto"
 	"crypto/md5"
-	"io"
-	"github.com/yeeyuntech/yeego/yeeStrconv"
-	"time"
-	"sync"
+	"encoding/json"
+	"errors"
+	"fmt"
 	"github.com/Unknwon/com"
-	"os/exec"
+	"github.com/yeeyuntech/yeego/yeeCrypto"
+	"github.com/yeeyuntech/yeego/yeeFile"
+	"github.com/yeeyuntech/yeego/yeeImage"
+	"github.com/yeeyuntech/yeego/yeeStrconv"
+	"github.com/yeeyuntech/yeego/yeeStrings"
+	"gitlab.yeeyuntech.com/yee/easyweb"
+	"gitlab.yeeyuntech.com/yee/easyweb_cms/conf"
+	"io"
 	"net/http"
 	"os"
-	"github.com/yeeyuntech/yeego/yeeFile"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/conf"
-	"encoding/json"
-	"github.com/yeeyuntech/yeego/yeeImage"
-	"errors"
+	"os/exec"
+	"path/filepath"
+	"strings"
+	"sync"
+	"time"
 )
 
 type Upload_Api struct {
 }
 
-func (Upload_Api) UploadImage(saveDir ... string) easyweb.HandlerFunc {
+func (Upload_Api) UploadImage(saveDir ...string) easyweb.HandlerFunc {
 	f := func(c *easyweb.Context) {
 		savePath := conf.UploadImgPath
 		if len(saveDir) > 0 {
@@ -71,7 +70,7 @@ func (Upload_Api) UploadImage(saveDir ... string) easyweb.HandlerFunc {
 	return f
 }
 
-func (Upload_Api) UploadFile(saveDir ... string) easyweb.HandlerFunc {
+func (Upload_Api) UploadFile(saveDir ...string) easyweb.HandlerFunc {
 	f := func(c *easyweb.Context) {
 		savePath := conf.UploadFilePath
 		if len(saveDir) > 0 {
@@ -91,7 +90,7 @@ func (Upload_Api) UploadFile(saveDir ... string) easyweb.HandlerFunc {
 	return f
 }
 
-func (Upload_Api) UploadVideo(saveDir ... string) easyweb.HandlerFunc {
+func (Upload_Api) UploadVideo(saveDir ...string) easyweb.HandlerFunc {
 	f := func(c *easyweb.Context) {
 		info := SimpleUpload(c.Request(), conf.UploadVideoPath, "", ImageExtList)
 		if info.Err != nil {
@@ -164,7 +163,7 @@ var (
 func SimpleUpload(request *http.Request, uploadDir, returnPath string, allowExt []string) (info UploadReturnInfo) {
 	defer func() {
 		if err := recover(); err != nil {
-			yeego.DefaultLogError(fmt.Sprintf("simple upload error :[%v]", err))
+			fmt.Printf("simple upload error :[%v] \n", err)
 		}
 	}()
 	if request.Method != "POST" {
@@ -373,18 +372,18 @@ func transCodeToMp4(src, dst string) error {
 	cmd := exec.Command("/bin/sh", "-c", command)
 	err := cmd.Start()
 	if err != nil {
-		yeego.DefaultLogError(fmt.Sprintf("transCodeToMp4 error :[%s]", err.Error()))
+		fmt.Println(fmt.Sprintf("transCodeToMp4 error :[%s]", err.Error()))
 		return err
 	}
 	_, err = cmd.Process.Wait()
 	if err != nil {
-		yeego.DefaultLogError(fmt.Sprintf("transCodeToMp4 error :[%s]", err.Error()))
+		fmt.Println(fmt.Sprintf("transCodeToMp4 error :[%s]", err.Error()))
 		return err
 	}
 	// dst不存在，表示转码失败，则直接拷贝原始视频到新地址
 	if !yeeFile.FileExists(dst) {
 		if err := yeeFile.Copy(src, dst); err != nil {
-			yeego.DefaultLogError(fmt.Sprintf("transCodeToMp4 error :[%s]", err.Error()))
+			fmt.Println(fmt.Sprintf("transCodeToMp4 error :[%s]", err.Error()))
 			return err
 		}
 	}
@@ -392,13 +391,13 @@ func transCodeToMp4(src, dst string) error {
 	if yeeFile.FileExists(dst + ".faststart") {
 		// 先copy一份旧的视频,拷贝失败，直接返回，不管了
 		if err := yeeFile.Copy(dst, dst+".old"); err != nil {
-			yeego.DefaultLogError(fmt.Sprintf("transCodeToMp4 error :[%s]", err.Error()))
+			fmt.Println(fmt.Sprintf("transCodeToMp4 error :[%s]", err.Error()))
 			os.RemoveAll(dst + ".faststart")
 			return nil
 		}
 		// 将qt-start的改名
 		if err := os.Rename(dst+".faststart", dst); err != nil {
-			yeego.DefaultLogError(fmt.Sprintf("transCodeToMp4 error :[%s]", err.Error()))
+			fmt.Println(fmt.Sprintf("transCodeToMp4 error :[%s]", err.Error()))
 			// 如果失败，那么就再转回去
 			yeeFile.Copy(dst+".old", dst)
 		}
@@ -406,7 +405,7 @@ func transCodeToMp4(src, dst string) error {
 	}
 	if !yeeFile.FileExists(dst) {
 		if err := yeeFile.Copy(src, dst); err != nil {
-			yeego.DefaultLogError(fmt.Sprintf("transCodeToMp4 error :[%s]", err.Error()))
+			fmt.Println(fmt.Sprintf("transCodeToMp4 error :[%s]", err.Error()))
 			return err
 		}
 	}

@@ -6,8 +6,8 @@
 package model
 
 import (
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/conf"
 	"github.com/yeeyuntech/yeego/yeeStrconv"
+	"gitlab.yeeyuntech.com/yee/easyweb_cms/conf"
 )
 
 // 管理员角色和权限的中间表，链接了角色以及角色拥有的权限
@@ -56,11 +56,11 @@ func getRoleActions(roleId int) []TempCateAction {
 			"group_concat(yeecms_privilege.action) AS role_actions," +
 			"group_concat(yeecms_privilege.id) AS role_actions_id").Group("cate_id").Scan(&data)
 	} else {
-		defaultDB.Table(AdminPrivilege{}.TableName()).Select("cate_id," +
-			"group_concat(yeecms_privilege.action) AS role_actions," +
+		defaultDB.Table(AdminPrivilege{}.TableName()).Select("cate_id,"+
+			"group_concat(yeecms_privilege.action) AS role_actions,"+
 			"group_concat(yeecms_privilege.id) AS role_actions_id").
-			Joins("inner join yeecms_admin_role_privilege " +
-			"on yeecms_admin_role_privilege.privilege_id = yeecms_privilege.id").
+			Joins("inner join yeecms_admin_role_privilege "+
+				"on yeecms_admin_role_privilege.privilege_id = yeecms_privilege.id").
 			Where("yeecms_admin_role_privilege.role_id = ?", roleId).Group("cate_id").Scan(&data)
 	}
 	return data
