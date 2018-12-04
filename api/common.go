@@ -5,10 +5,10 @@
 package api
 
 import (
+	"encoding/json"
 	"github.com/spf13/cast"
 	"gitlab.yeeyuntech.com/yee/easyweb"
 	"gitlab.yeeyuntech.com/yee/easyweb_cms/model"
-	"x-market_lib/util/json_tool"
 )
 
 var CommonApiCtx CommonApi
@@ -21,7 +21,7 @@ func (CommonApi) Sort() easyweb.HandlerFunc {
 		modelId := c.PathParam("modelId")
 		sort := c.Param("sort").GetString()
 		var set map[int]int
-		err := json_tool.Json().UnmarshalFromString(sort, &set)
+		err := json.Unmarshal([]byte(sort), &set)
 		if err != nil {
 			c.FailWithDefaultCode(err.Error())
 			return
