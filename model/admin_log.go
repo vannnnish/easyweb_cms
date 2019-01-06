@@ -6,7 +6,7 @@
 package model
 
 import (
-	"github.com/yeeyuntech/yeego/yeeTime"
+	"github.com/vannnnish/yeego/yeeTime"
 	"time"
 )
 

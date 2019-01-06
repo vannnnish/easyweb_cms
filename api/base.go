@@ -6,8 +6,8 @@
 package api
 
 import (
-	"gitlab.yeeyuntech.com/yee/easyweb"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/conf"
+	"easyweb_cms/conf"
+	"github.com/vannnnish/easyweb"
 )
 
 const (

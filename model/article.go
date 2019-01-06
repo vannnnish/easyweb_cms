@@ -7,8 +7,8 @@ package model
 
 import (
 	"errors"
-	"github.com/yeeyuntech/yeego/yeeTime"
-	"gitlab.yeeyuntech.com/yee/easyweb"
+	"github.com/vannnnish/yeego/yeeTime"
+	"github.com/vannnnish/easyweb"
 	"time"
 )
 

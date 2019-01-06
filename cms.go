@@ -6,17 +6,17 @@
 package easyweb_cms
 
 import (
+	"easyweb_cms/conf"
+	"easyweb_cms/model"
+	"easyweb_cms/route"
 	"fmt"
 	"github.com/BurntSushi/toml"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"github.com/yeeyuntech/yeego"
-	"github.com/yeeyuntech/yeego/yeeCrypto"
-	"github.com/yeeyuntech/yeego/yeeStrconv"
-	"gitlab.yeeyuntech.com/yee/easyweb"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/conf"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/model"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/route"
+	"github.com/vannnnish/easyweb"
+	"github.com/vannnnish/yeego"
+	"github.com/vannnnish/yeego/yeeCrypto"
+	"github.com/vannnnish/yeego/yeeStrconv"
 	"io"
 	"log"
 )

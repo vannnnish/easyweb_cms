@@ -6,12 +6,12 @@
 package api
 
 import (
-	"github.com/yeeyuntech/yeego"
-	"github.com/yeeyuntech/yeego/yeeCrypto"
-	"github.com/yeeyuntech/yeego/yeeStrconv"
-	"gitlab.yeeyuntech.com/yee/easyweb"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/conf"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/model"
+	"easyweb_cms/conf"
+	"easyweb_cms/model"
+	"github.com/vannnnish/easyweb"
+	"github.com/vannnnish/yeego"
+	"github.com/vannnnish/yeego/yeeCrypto"
+	"github.com/vannnnish/yeego/yeeStrconv"
 )
 
 type AdminUser_Api struct {

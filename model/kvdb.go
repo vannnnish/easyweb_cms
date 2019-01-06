@@ -5,7 +5,7 @@
 
 package model
 
-import "gitlab.yeeyuntech.com/yee/easyweb"
+import "github.com/vannnnish/easyweb"
 
 type Kvdb struct {
 	Key   string `gorm:"not null" json:"key"`                 // 键

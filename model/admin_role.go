@@ -6,13 +6,13 @@
 package model
 
 import (
+	"easyweb_cms/conf"
 	"errors"
-	"github.com/yeeyuntech/yeego/yeeSql"
-	"github.com/yeeyuntech/yeego/yeeStrconv"
-	"github.com/yeeyuntech/yeego/yeeStrings"
-	"github.com/yeeyuntech/yeego/yeeTransform"
-	"gitlab.yeeyuntech.com/yee/easyweb"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/conf"
+	"github.com/vannnnish/easyweb"
+	"github.com/vannnnish/yeego/yeeSql"
+	"github.com/vannnnish/yeego/yeeStrconv"
+	"github.com/vannnnish/yeego/yeeStrings"
+	"github.com/vannnnish/yeego/yeeTransform"
 )
 
 // 管理员角色

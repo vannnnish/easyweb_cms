@@ -5,7 +5,7 @@
 
 package model
 
-import "gitlab.yeeyuntech.com/yee/easyweb"
+import "github.com/vannnnish/easyweb"
 
 // 轮换图
 type Slide struct {

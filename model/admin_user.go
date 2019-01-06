@@ -8,9 +8,9 @@ package model
 import (
 	"errors"
 	"fmt"
-	"github.com/yeeyuntech/yeego/yeeCrypto"
-	"github.com/yeeyuntech/yeego/yeeTime"
-	"gitlab.yeeyuntech.com/yee/easyweb"
+	"github.com/vannnnish/yeego/yeeCrypto"
+	"github.com/vannnnish/yeego/yeeTime"
+	"github.com/vannnnish/easyweb"
 	"time"
 )
 

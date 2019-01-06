@@ -6,8 +6,8 @@
 package api
 
 import (
-	"gitlab.yeeyuntech.com/yee/easyweb"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/model"
+	"easyweb_cms/model"
+	"github.com/vannnnish/easyweb"
 )
 
 type AdminLog_Api struct {

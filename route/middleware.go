@@ -6,14 +6,14 @@
 package route
 
 import (
-	"github.com/yeeyuntech/yeego"
-	"github.com/yeeyuntech/yeego/yeeCrypto"
-	"github.com/yeeyuntech/yeego/yeeStrconv"
-	"github.com/yeeyuntech/yeego/yeeTransform"
-	"gitlab.yeeyuntech.com/yee/easyweb"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/api"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/conf"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/model"
+	"easyweb_cms/api"
+	"easyweb_cms/conf"
+	"easyweb_cms/model"
+	"github.com/vannnnish/easyweb"
+	"github.com/vannnnish/yeego"
+	"github.com/vannnnish/yeego/yeeCrypto"
+	"github.com/vannnnish/yeego/yeeStrconv"
+	"github.com/vannnnish/yeego/yeeTransform"
 	"net/http"
 	"strings"
 	"time"

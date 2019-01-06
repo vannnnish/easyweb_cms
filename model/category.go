@@ -8,13 +8,13 @@ package model
 import (
 	"encoding/json"
 	"errors"
-	"github.com/yeeyuntech/yeego/yeeCache"
-	"github.com/yeeyuntech/yeego/yeeSql"
-	"github.com/yeeyuntech/yeego/yeeStrconv"
-	"github.com/yeeyuntech/yeego/yeeStrings"
-	"github.com/yeeyuntech/yeego/yeeTransform"
-	"gitlab.yeeyuntech.com/yee/easyweb"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/conf"
+	"github.com/vannnnish/yeego/yeeCache"
+	"github.com/vannnnish/yeego/yeeSql"
+	"github.com/vannnnish/yeego/yeeStrconv"
+	"github.com/vannnnish/yeego/yeeStrings"
+	"github.com/vannnnish/yeego/yeeTransform"
+	"github.com/vannnnish/easyweb"
+	"easyweb_cms/conf"
 	"time"
 )
 

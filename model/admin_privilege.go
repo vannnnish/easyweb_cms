@@ -7,9 +7,9 @@ package model
 
 import (
 	"errors"
-	"github.com/yeeyuntech/yeego"
-	"github.com/yeeyuntech/yeego/yeeStrings"
-	"gitlab.yeeyuntech.com/yee/easyweb"
+	"github.com/vannnnish/easyweb"
+	"github.com/vannnnish/yeego"
+	"github.com/vannnnish/yeego/yeeStrings"
 	"strings"
 )
 

@@ -6,9 +6,9 @@
 package api
 
 import (
-	"github.com/yeeyuntech/yeego/yeeStrconv"
-	"gitlab.yeeyuntech.com/yee/easyweb"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/model"
+	"easyweb_cms/model"
+	"github.com/vannnnish/easyweb"
+	"github.com/vannnnish/yeego/yeeStrconv"
 )
 
 type Article_Api struct {

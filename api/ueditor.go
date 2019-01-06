@@ -6,10 +6,10 @@
 package api
 
 import (
+	"easyweb_cms/conf"
 	"encoding/json"
-	"github.com/yeeyuntech/yeego"
-	"gitlab.yeeyuntech.com/yee/easyweb"
-	"gitlab.yeeyuntech.com/yee/easyweb_cms/conf"
+	"github.com/vannnnish/easyweb"
+	"github.com/vannnnish/yeego"
 	"sync"
 )
 
