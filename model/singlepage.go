@@ -6,8 +6,8 @@
 package model
 
 import (
-	"github.com/vannnnish/yeego/yeeTime"
 	"github.com/vannnnish/easyweb"
+	"github.com/vannnnish/yeego/yeeTime"
 	"time"
 )
 

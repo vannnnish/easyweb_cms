@@ -6,10 +6,10 @@
 package api
 
 import (
-	"easyweb_cms/conf"
-	"easyweb_cms/model"
 	"github.com/buger/jsonparser"
 	"github.com/vannnnish/easyweb"
+	"github.com/vannnnish/easyweb_cms/conf"
+	"github.com/vannnnish/easyweb_cms/model"
 	"github.com/vannnnish/yeego"
 	"github.com/vannnnish/yeego/yeeCache"
 	"github.com/vannnnish/yeego/yeeCrypto"

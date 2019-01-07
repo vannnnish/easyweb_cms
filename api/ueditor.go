@@ -6,9 +6,9 @@
 package api
 
 import (
-	"easyweb_cms/conf"
 	"encoding/json"
 	"github.com/vannnnish/easyweb"
+	"github.com/vannnnish/easyweb_cms/conf"
 	"github.com/vannnnish/yeego"
 	"sync"
 )

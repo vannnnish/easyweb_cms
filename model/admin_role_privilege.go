@@ -6,7 +6,7 @@
 package model
 
 import (
-	"easyweb_cms/conf"
+	"github.com/vannnnish/easyweb_cms/conf"
 	"github.com/vannnnish/yeego/yeeStrconv"
 )
 

@@ -6,9 +6,9 @@
 package model
 
 import (
-	"easyweb_cms/conf"
 	"errors"
 	"github.com/vannnnish/easyweb"
+	"github.com/vannnnish/easyweb_cms/conf"
 	"github.com/vannnnish/yeego/yeeSql"
 	"github.com/vannnnish/yeego/yeeStrconv"
 	"github.com/vannnnish/yeego/yeeStrings"

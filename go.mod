@@ -1,4 +1,4 @@
-module easyweb_cms
+module github.com/vannnnish/easyweb_cms
 
 require (
 	cloud.google.com/go v0.34.0 // indirect

@@ -6,8 +6,8 @@
 package route
 
 import (
-	"easyweb_cms/api"
 	"github.com/vannnnish/easyweb"
+	"github.com/vannnnish/easyweb_cms/api"
 	"github.com/vannnnish/yeego"
 )
 

@@ -6,10 +6,10 @@
 package route
 
 import (
-	"easyweb_cms/api"
-	"easyweb_cms/conf"
-	"easyweb_cms/model"
 	"github.com/vannnnish/easyweb"
+	"github.com/vannnnish/easyweb_cms/api"
+	"github.com/vannnnish/easyweb_cms/conf"
+	"github.com/vannnnish/easyweb_cms/model"
 	"github.com/vannnnish/yeego"
 	"github.com/vannnnish/yeego/yeeCrypto"
 	"github.com/vannnnish/yeego/yeeStrconv"

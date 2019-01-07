@@ -6,14 +6,14 @@
 package easyweb_cms
 
 import (
-	"easyweb_cms/conf"
-	"easyweb_cms/model"
-	"easyweb_cms/route"
 	"fmt"
 	"github.com/BurntSushi/toml"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/vannnnish/easyweb"
+	"github.com/vannnnish/easyweb_cms/conf"
+	"github.com/vannnnish/easyweb_cms/model"
+	"github.com/vannnnish/easyweb_cms/route"
 	"github.com/vannnnish/yeego"
 	"github.com/vannnnish/yeego/yeeCrypto"
 	"github.com/vannnnish/yeego/yeeStrconv"

@@ -5,10 +5,10 @@
 package api
 
 import (
-	"easyweb_cms/model"
 	"encoding/json"
 	"github.com/spf13/cast"
 	"github.com/vannnnish/easyweb"
+	"github.com/vannnnish/easyweb_cms/model"
 )
 
 var CommonApiCtx CommonApi

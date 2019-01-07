@@ -7,12 +7,12 @@ package api
 
 import (
 	"crypto/md5"
-	"easyweb_cms/conf"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/Unknwon/com"
 	"github.com/vannnnish/easyweb"
+	"github.com/vannnnish/easyweb_cms/conf"
 	"github.com/vannnnish/yeego/yeeCrypto"
 	"github.com/vannnnish/yeego/yeeFile"
 	"github.com/vannnnish/yeego/yeeImage"
