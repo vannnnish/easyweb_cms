@@ -14,8 +14,10 @@ import (
 	"github.com/vannnnish/easyweb"
 	"github.com/vannnnish/easyweb_cms/conf"
 	"github.com/vannnnish/yeego/yeecrypto"
+	"github.com/vannnnish/yeego/yeefile"
 	"github.com/vannnnish/yeego/yeeimage"
 	"github.com/vannnnish/yeego/yeestrconv"
+	"github.com/vannnnish/yeego/yeestrings"
 	"io"
 	"net/http"
 	"os"
@@ -286,7 +288,7 @@ func checkErr(err error) {
 func genRealPathWithDir(dir string) string {
 	now := time.Now()
 	newDir := fmt.Sprintf("%s/%d/%d/%d/", dir, now.Year(), now.Month(), now.Day())
-	if !yeeFile.FileExists(newDir) {
+	if !yeefile.FileExists(newDir) {
 		os.MkdirAll(newDir, os.ModePerm)
 	}
 	return newDir
@@ -305,19 +307,19 @@ var fileCountLock sync.Mutex
 func fileCount(path string) int {
 	fileCountLock.Lock()
 	defer fileCountLock.Unlock()
-	if yeeFile.FileExists(path) {
-		countStr, err := yeeFile.GetString(path)
+	if yeefile.FileExists(path) {
+		countStr, err := yeefile.GetString(path)
 		if err != nil {
 			count := 1
-			yeeFile.SetString(path, yeestrconv.FormatInt(count))
+			yeefile.SetString(path, yeestrconv.FormatInt(count))
 			return count
 		}
 		count := yeestrconv.AtoIDefault0(countStr) + 1
-		yeeFile.SetString(path, yeestrconv.FormatInt(count))
+		yeefile.SetString(path, yeestrconv.FormatInt(count))
 		return count
 	}
 	count := 1
-	yeeFile.SetString(path, yeestrconv.FormatInt(count))
+	yeefile.SetString(path, yeestrconv.FormatInt(count))
 	return count
 }
 
@@ -379,16 +381,16 @@ func transCodeToMp4(src, dst string) error {
 		return err
 	}
 	// dst不存在，表示转码失败，则直接拷贝原始视频到新地址
-	if !yeeFile.FileExists(dst) {
-		if err := yeeFile.Copy(src, dst); err != nil {
+	if !yeefile.FileExists(dst) {
+		if err := yeefile.Copy(src, dst); err != nil {
 			fmt.Println(fmt.Sprintf("transCodeToMp4 error :[%s]", err.Error()))
 			return err
 		}
 	}
 	// 存在dst.faststart 说明qt-faststart执行成功，则换名称
-	if yeeFile.FileExists(dst + ".faststart") {
+	if yeefile.FileExists(dst + ".faststart") {
 		// 先copy一份旧的视频,拷贝失败，直接返回，不管了
-		if err := yeeFile.Copy(dst, dst+".old"); err != nil {
+		if err := yeefile.Copy(dst, dst+".old"); err != nil {
 			fmt.Println(fmt.Sprintf("transCodeToMp4 error :[%s]", err.Error()))
 			os.RemoveAll(dst + ".faststart")
 			return nil
@@ -397,12 +399,12 @@ func transCodeToMp4(src, dst string) error {
 		if err := os.Rename(dst+".faststart", dst); err != nil {
 			fmt.Println(fmt.Sprintf("transCodeToMp4 error :[%s]", err.Error()))
 			// 如果失败，那么就再转回去
-			yeeFile.Copy(dst+".old", dst)
+			yeefile.Copy(dst+".old", dst)
 		}
 		os.RemoveAll(dst + ".old")
 	}
-	if !yeeFile.FileExists(dst) {
-		if err := yeeFile.Copy(src, dst); err != nil {
+	if !yeefile.FileExists(dst) {
+		if err := yeefile.Copy(src, dst); err != nil {
 			fmt.Println(fmt.Sprintf("transCodeToMp4 error :[%s]", err.Error()))
 			return err
 		}
