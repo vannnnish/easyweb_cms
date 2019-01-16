@@ -10,8 +10,8 @@ import (
 	"github.com/vannnnish/easyweb_cms/conf"
 	"github.com/vannnnish/easyweb_cms/model"
 	"github.com/vannnnish/yeego"
-	"github.com/vannnnish/yeego/yeeCrypto"
-	"github.com/vannnnish/yeego/yeeStrconv"
+	"github.com/vannnnish/yeego/yeecrypto"
+	"github.com/vannnnish/yeego/yeestrconv"
 )
 
 type AdminUser_Api struct {
@@ -35,7 +35,7 @@ func (adminUser AdminUser_Api) Create() easyweb.HandlerFunc {
 	f := func(c *easyweb.Context) {
 		account := c.Param("account").MustGetString()
 		roleId := c.Param("role_id").MustGetInt()
-		defaultPwd := yeeCrypto.Sha256Hex([]byte(yeego.Config.GetString("app.DefaultPassword")))
+		defaultPwd := yeecrypto.Sha256Hex([]byte(yeego.Config.GetString("app.DefaultPassword")))
 		password := c.Param("password").SetDefault(defaultPwd).GetString()
 		username := c.Param("user_name").GetString()
 		phone := c.Param("phone").GetString()
@@ -70,11 +70,11 @@ func (adminUser AdminUser_Api) List() easyweb.HandlerFunc {
 		roleId := c.Param("role_id").GetInt()
 		account := c.Param("account").GetString()
 		count := adminUser.AdminUserModel.SelectAllWithoutDefaultCount(map[string]string{
-			"role_id": yeeStrconv.FormatInt(roleId),
+			"role_id": yeestrconv.FormatInt(roleId),
 			"account": account,
 		})
 		data := adminUser.AdminUserModel.SelectAllWithoutDefault(map[string]string{
-			"role_id": yeeStrconv.FormatInt(roleId),
+			"role_id": yeestrconv.FormatInt(roleId),
 			"account": account,
 		}, pageSize, (page-1)*pageSize)
 		c.RenderData("data", data)
@@ -163,7 +163,7 @@ func (adminUser AdminUser_Api) ResetPassword() easyweb.HandlerFunc {
 			c.FailWithDefaultCode(err.Error())
 			return
 		}
-		pwd := yeeCrypto.Sha256Hex([]byte(yeego.Config.GetString("app.DefaultPassword")))
+		pwd := yeecrypto.Sha256Hex([]byte(yeego.Config.GetString("app.DefaultPassword")))
 		if err := adminUser.AdminUserModel.ResetPassword(adminUserId, pwd); err != nil {
 			c.FailWithDefaultCode(err.Error())
 			return
@@ -178,7 +178,7 @@ func (adminUser AdminUser_Api) Sort() easyweb.HandlerFunc {
 	f := func(c *easyweb.Context) {
 		postData := c.Request().PostForm
 		for k, v := range postData {
-			if err := adminUser.AdminUserModel.DoSort(yeeStrconv.AtoIDefault0(k), yeeStrconv.AtoIDefault0(v[0])); err != nil {
+			if err := adminUser.AdminUserModel.DoSort(yeestrconv.AtoIDefault0(k), yeestrconv.AtoIDefault0(v[0])); err != nil {
 				c.FailWithDefaultCode(err.Error())
 				return
 			}

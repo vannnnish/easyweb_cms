@@ -8,7 +8,7 @@ package model
 import (
 	"errors"
 	"github.com/vannnnish/easyweb"
-	"github.com/vannnnish/yeego/yeeTime"
+	"github.com/vannnnish/yeego/yeetime"
 	"time"
 )
 
@@ -116,9 +116,9 @@ func (Article) Create(article Article) error {
 	if cateModel.DbTableName != (Article{}).TableName() {
 		return errors.New("栏目对应的模型类型错误")
 	}
-	article.CreateTime = time.Now().Format(yeeTime.FormatMysql)
+	article.CreateTime = time.Now().Format(yeetime.FormatMysql)
 	if article.UpdateTime == "" {
-		article.UpdateTime = time.Now().Format(yeeTime.FormatMysql)
+		article.UpdateTime = time.Now().Format(yeetime.FormatMysql)
 	}
 	if err := defaultDB.Create(&article).Error; err != nil {
 		easyweb.Logger.Error(err.Error())
@@ -130,7 +130,7 @@ func (Article) Create(article Article) error {
 // 编辑文章
 func (Article) Update(article Article) error {
 	if article.UpdateTime == "" {
-		article.UpdateTime = time.Now().Format(yeeTime.FormatMysql)
+		article.UpdateTime = time.Now().Format(yeetime.FormatMysql)
 	}
 	if err := defaultDB.Model(article).Update(&article); err != nil {
 		easyweb.Logger.Error(err.Error)

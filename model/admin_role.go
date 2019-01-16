@@ -9,10 +9,10 @@ import (
 	"errors"
 	"github.com/vannnnish/easyweb"
 	"github.com/vannnnish/easyweb_cms/conf"
-	"github.com/vannnnish/yeego/yeeSql"
-	"github.com/vannnnish/yeego/yeeStrconv"
-	"github.com/vannnnish/yeego/yeeStrings"
-	"github.com/vannnnish/yeego/yeeTransform"
+	"github.com/vannnnish/yeego/yeesql"
+	"github.com/vannnnish/yeego/yeestrconv"
+	"github.com/vannnnish/yeego/yeestrings"
+	"github.com/vannnnish/yeego/yeetransform"
 )
 
 // 管理员角色
@@ -40,10 +40,10 @@ func (AdminRole) SelectAll(pageSize, offset int) []map[string]interface{} {
 	}
 	// 获取全部role信息
 	rows, _ := defaultDB.Table(AdminRole{}.TableName()).Limit(pageSize).Offset(offset).Rows()
-	otherData := yeeSql.RowsToMapSlice(rows)
-	infoOtherInterface := yeeTransform.MapSliceStringToInterface(otherData)
+	otherData := yeesql.RowsToMapSlice(rows)
+	infoOtherInterface := yeetransform.MapSliceStringToInterface(otherData)
 	for k, v := range otherData {
-		infoOtherInterface[k]["role_cates"] = AdminRolePrivilege{}.RoleActions(yeeStrconv.AtoIDefault0(v["id"]))
+		infoOtherInterface[k]["role_cates"] = AdminRolePrivilege{}.RoleActions(yeestrconv.AtoIDefault0(v["id"]))
 	}
 	data = append(data, infoOtherInterface...)
 	return data
@@ -63,10 +63,10 @@ func (AdminRole) SelectAllId(pageSize, offset int) []map[string]interface{} {
 	}
 	// 获取全部role信息
 	rows, _ := defaultDB.Table(AdminRole{}.TableName()).Limit(pageSize).Offset(offset).Rows()
-	otherData := yeeSql.RowsToMapSlice(rows)
-	infoOtherInterface := yeeTransform.MapSliceStringToInterface(otherData)
+	otherData := yeesql.RowsToMapSlice(rows)
+	infoOtherInterface := yeetransform.MapSliceStringToInterface(otherData)
 	for k, v := range otherData {
-		infoOtherInterface[k]["role_cates"] = AdminRolePrivilege{}.RoleActionsId(yeeStrconv.AtoIDefault0(v["id"]))
+		infoOtherInterface[k]["role_cates"] = AdminRolePrivilege{}.RoleActionsId(yeestrconv.AtoIDefault0(v["id"]))
 	}
 	data = append(data, infoOtherInterface...)
 	return data
@@ -93,12 +93,12 @@ func (AdminRole) SelectOne(roleId int) map[string]interface{} {
 	if err != nil {
 		return nil
 	}
-	infos := yeeSql.RowsToMapSlice(rows)
+	infos := yeesql.RowsToMapSlice(rows)
 	if len(infos) <= 0 {
 		return nil
 	}
 	info := infos[0]
-	infoMap := yeeTransform.MapStringToInterface(info)
+	infoMap := yeetransform.MapStringToInterface(info)
 	infoMap["role_cates"] = AdminRolePrivilege{}.RoleActionsId(roleId)
 	return infoMap
 }
@@ -117,12 +117,12 @@ func (AdminRole) SelectSelf(roleId int) map[string]interface{} {
 	if err != nil {
 		return nil
 	}
-	infos := yeeSql.RowsToMapSlice(rows)
+	infos := yeesql.RowsToMapSlice(rows)
 	if len(infos) <= 0 {
 		return nil
 	}
 	info := infos[0]
-	infoMap := yeeTransform.MapStringToInterface(info)
+	infoMap := yeetransform.MapStringToInterface(info)
 	infoMap["role_cates"] = AdminRolePrivilege{}.RoleActions(roleId)
 	return infoMap
 }
@@ -142,7 +142,7 @@ func (AdminRole) Create(name, privilegeIds string) error {
 		return CreateError
 	}
 	// 为角色添加权限
-	for _, v := range yeeStrings.StringToIntArray(privilegeIds, ",") {
+	for _, v := range yeestrings.StringToIntArray(privilegeIds, ",") {
 		err := tx.Create(&AdminRolePrivilege{RoleId: newRole.Id, PrivilegeId: v}).Error
 		if err != nil {
 			tx.Rollback()
@@ -178,7 +178,7 @@ func (AdminRole) Update(roleId int, name, privilegeIds string) error {
 		return errors.New("更新角色信息失败，请重试")
 	}
 	// 新建权限
-	for _, v := range yeeStrings.StringToIntArray(privilegeIds, ",") {
+	for _, v := range yeestrings.StringToIntArray(privilegeIds, ",") {
 		err := tx.Create(&AdminRolePrivilege{RoleId: roleId, PrivilegeId: v}).Error
 		if err != nil {
 			tx.Rollback()
@@ -207,7 +207,7 @@ func (AdminRole) Delete(roleId int) error {
 	}
 	// 判断是否有该角色的管理员
 	count := AdminUser{}.SelectAllWithoutDefaultCount(map[string]string{
-		"role_id": yeeStrconv.FormatInt(roleId),
+		"role_id": yeestrconv.FormatInt(roleId),
 	})
 	if count > 0 {
 		return errors.New("删除角色失败，请先删除此角色下的管理员")

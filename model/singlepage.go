@@ -7,7 +7,7 @@ package model
 
 import (
 	"github.com/vannnnish/easyweb"
-	"github.com/vannnnish/yeego/yeeTime"
+	"github.com/vannnnish/yeego/yeetime"
 	"time"
 )
 
@@ -29,7 +29,7 @@ func (SinglePage) TableName() string {
 
 // 新建或者编辑单页面
 func (SinglePage) CreateOrUpdate(singlePage SinglePage) error {
-	singlePage.UpdateTime = time.Now().Format(yeeTime.FormatMysql)
+	singlePage.UpdateTime = time.Now().Format(yeetime.FormatMysql)
 	if defaultDB.Where(&SinglePage{CateId: singlePage.CateId}).First(&SinglePage{}).RecordNotFound() {
 		// 未找到，创建
 		if err := defaultDB.Create(&singlePage).Error; err != nil {

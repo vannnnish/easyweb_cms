@@ -10,8 +10,8 @@ import (
 	"errors"
 	"github.com/vannnnish/easyweb"
 	"github.com/vannnnish/easyweb_cms/conf"
-	"github.com/vannnnish/yeego/yeeCache"
-	"github.com/vannnnish/yeego/yeeStrconv"
+	"github.com/vannnnish/yeego/yeecache"
+	"github.com/vannnnish/yeego/yeestrconv"
 	"time"
 )
 
@@ -52,8 +52,8 @@ func (Model) SelectOneModel(model *Model) error {
 
 // 获取一个模型信息(文件ttl缓存)
 func (Model) SelectOneModelWithCache(model *Model) error {
-	cacheFileName := conf.CacheFilePath + yeeStrconv.FormatInt(model.Id) + ".cache"
-	b, err := yeeCache.FileTtlCache(cacheFileName, func() (b []byte, ttl time.Duration, err error) {
+	cacheFileName := conf.CacheFilePath + yeestrconv.FormatInt(model.Id) + ".cache"
+	b, err := yeecache.FileTtlCache(cacheFileName, func() (b []byte, ttl time.Duration, err error) {
 		err = Model{}.SelectOneModel(model)
 		if err != nil {
 			return nil, time.Second, err
@@ -89,7 +89,7 @@ func (Model) SelectAll() []Model {
 func (Model) SelectAllWithCache() []Model {
 	var models []Model
 	cacheFileName := conf.CacheFilePath + "all.cache"
-	b, err := yeeCache.FileTtlCache(cacheFileName, func() (b []byte, ttl time.Duration, err error) {
+	b, err := yeecache.FileTtlCache(cacheFileName, func() (b []byte, ttl time.Duration, err error) {
 		data := Model{}.SelectAll()
 		b, err = json.Marshal(&data)
 		if err != nil {

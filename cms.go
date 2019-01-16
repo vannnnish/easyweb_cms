@@ -15,8 +15,8 @@ import (
 	"github.com/vannnnish/easyweb_cms/model"
 	"github.com/vannnnish/easyweb_cms/route"
 	"github.com/vannnnish/yeego"
-	"github.com/vannnnish/yeego/yeeCrypto"
-	"github.com/vannnnish/yeego/yeeStrconv"
+	"github.com/vannnnish/yeego/yeecrypto"
+	"github.com/vannnnish/yeego/yeestrconv"
 	"io"
 	"log"
 )
@@ -187,7 +187,7 @@ func InitDefaultModel() {
 				isShow = false
 			}
 			m := model.Model{
-				Id:          yeeStrconv.AtoIDefault0(v["Id"]),
+				Id:          yeestrconv.AtoIDefault0(v["Id"]),
 				Name:        v["Name"],
 				IsShow:      isShow,
 				DbTableName: v["TableName"],
@@ -206,14 +206,14 @@ func InitDefaultAdminUser() {
 		Id:       1,
 		Account:  "yeeyun_root",
 		RoleId:   -1,
-		Password: yeeCrypto.Sha256Hex([]byte(yeeCrypto.Sha256Hex([]byte("cd32d5e86e")))),
+		Password: yeecrypto.Sha256Hex([]byte(yeecrypto.Sha256Hex([]byte("cd32d5e86e")))),
 	}
 	defaultDB.FirstOrCreate(user1)
 	user2 := &model.AdminUser{
 		Id:       2,
 		Account:  "yeeyun",
 		RoleId:   -1,
-		Password: yeeCrypto.Sha256Hex([]byte(yeeCrypto.Sha256Hex([]byte("cd32d5e86e")))),
+		Password: yeecrypto.Sha256Hex([]byte(yeecrypto.Sha256Hex([]byte("cd32d5e86e")))),
 	}
 	defaultDB.FirstOrCreate(user2)
 }

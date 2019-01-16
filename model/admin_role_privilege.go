@@ -7,7 +7,7 @@ package model
 
 import (
 	"github.com/vannnnish/easyweb_cms/conf"
-	"github.com/vannnnish/yeego/yeeStrconv"
+	"github.com/vannnnish/yeego/yeestrconv"
 )
 
 // 管理员角色和权限的中间表，链接了角色以及角色拥有的权限
@@ -26,7 +26,7 @@ func (AdminRolePrivilege) RoleActions(roleId int) map[string]string {
 	rows := getRoleActions(roleId)
 	data := make(map[string]string)
 	for _, v := range rows {
-		data[yeeStrconv.FormatInt(v.CateId)] = v.RoleActions
+		data[yeestrconv.FormatInt(v.CateId)] = v.RoleActions
 	}
 	return data
 }
@@ -36,7 +36,7 @@ func (AdminRolePrivilege) RoleActionsId(roleId int) map[string]string {
 	rows := getRoleActions(roleId)
 	data := make(map[string]string)
 	for _, v := range rows {
-		data[yeeStrconv.FormatInt(v.CateId)] = v.RoleActionsId
+		data[yeestrconv.FormatInt(v.CateId)] = v.RoleActionsId
 	}
 	return data
 }

@@ -6,7 +6,7 @@
 package model
 
 import (
-	"github.com/vannnnish/yeego/yeeTime"
+	"github.com/vannnnish/yeego/yeetime"
 	"time"
 )
 
@@ -25,7 +25,7 @@ func (AdminLog) TableName() string {
 
 // 记录日志
 func (AdminLog) Log(account, ip, content string) {
-	log := AdminLog{Account: account, Content: content, IP: ip, Time: time.Now().Format(yeeTime.FormatMysql)}
+	log := AdminLog{Account: account, Content: content, IP: ip, Time: time.Now().Format(yeetime.FormatMysql)}
 	defaultDB.Create(&log)
 }
 

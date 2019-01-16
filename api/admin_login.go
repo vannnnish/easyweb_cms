@@ -11,11 +11,11 @@ import (
 	"github.com/vannnnish/easyweb_cms/conf"
 	"github.com/vannnnish/easyweb_cms/model"
 	"github.com/vannnnish/yeego"
-	"github.com/vannnnish/yeego/yeeCache"
-	"github.com/vannnnish/yeego/yeeCrypto"
-	"github.com/vannnnish/yeego/yeeHttp"
-	"github.com/vannnnish/yeego/yeeStrconv"
-	"github.com/vannnnish/yeego/yeeTime"
+	"github.com/vannnnish/yeego/yeecache"
+	"github.com/vannnnish/yeego/yeecrypto"
+	"github.com/vannnnish/yeego/yeehttp"
+	"github.com/vannnnish/yeego/yeestrconv"
+	"github.com/vannnnish/yeego/yeetime"
 	"net/http"
 	"os"
 	"strings"
@@ -36,8 +36,8 @@ func cookieName() string {
 // 获取背景图
 func (adminLogin AdminLogin_Api) BgImage() easyweb.HandlerFunc {
 	f := func(c *easyweb.Context) {
-		b, err := yeeCache.FileTtlCache(conf.BgImageCachePath, func() (b []byte, ttl time.Duration, err error) {
-			data, err := yeeHttp.Get("http://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1").Exec().ToBytes()
+		b, err := yeecache.FileTtlCache(conf.BgImageCachePath, func() (b []byte, ttl time.Duration, err error) {
+			data, err := yeehttp.Get("http://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1").Exec().ToBytes()
 			if err != nil {
 				return nil, 24 * time.Hour, err
 			}
@@ -71,8 +71,8 @@ func (adminLogin AdminLogin_Api) Login() easyweb.HandlerFunc {
 		}
 		adminUser := &model.AdminUser{Account: account}
 		adminLogin.AdminUserModel.SelectOneByAccount(adminUser)
-		token := strings.Join([]string{yeeStrconv.FormatInt(adminUser.Id), yeeCrypto.Md5Hex([]byte(adminUser.Password)),
-			yeeTime.TimeToUnixS(time.Now())}, "|")
+		token := strings.Join([]string{yeestrconv.FormatInt(adminUser.Id), yeecrypto.Md5Hex([]byte(adminUser.Password)),
+			yeetime.TimeToUnixS(time.Now())}, "|")
 		if err := adminLogin.AdminUserTokenModel.CreateOrUpdate(adminUser.Id, token); err != nil {
 			c.FailWithDefaultCode(err.Error())
 			return

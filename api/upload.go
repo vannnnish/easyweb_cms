@@ -13,11 +13,9 @@ import (
 	"github.com/Unknwon/com"
 	"github.com/vannnnish/easyweb"
 	"github.com/vannnnish/easyweb_cms/conf"
-	"github.com/vannnnish/yeego/yeeCrypto"
-	"github.com/vannnnish/yeego/yeeFile"
-	"github.com/vannnnish/yeego/yeeImage"
-	"github.com/vannnnish/yeego/yeeStrconv"
-	"github.com/vannnnish/yeego/yeeStrings"
+	"github.com/vannnnish/yeego/yeecrypto"
+	"github.com/vannnnish/yeego/yeeimage"
+	"github.com/vannnnish/yeego/yeestrconv"
 	"io"
 	"net/http"
 	"os"
@@ -60,8 +58,8 @@ func (Upload_Api) UploadImage(saveDir ...string) easyweb.HandlerFunc {
 					pathArr := strings.Split(info.Url, ".")
 					ext := "." + pathArr[len(pathArr)-1]
 					pathPrefix := info.Url[:len(info.Url)-len(ext)]
-					thumbPath := "." + pathPrefix + "_" + yeeStrconv.FormatInt(v[0]) + "x" + yeeStrconv.FormatInt(v[1]) + ext
-					yeeImage.ResizeImage("."+info.Url, thumbPath, uint(v[0]), uint(v[1]))
+					thumbPath := "." + pathPrefix + "_" + yeestrconv.FormatInt(v[0]) + "x" + yeestrconv.FormatInt(v[1]) + ext
+					yeeimage.ResizeImage("."+info.Url, thumbPath, uint(v[0]), uint(v[1]))
 				}
 			}
 		}
@@ -205,7 +203,7 @@ func SimpleUpload(request *http.Request, uploadDir, returnPath string, allowExt 
 			}
 		}
 	}
-	if !yeeStrings.IsInSlice(allowExt, strings.ToLower(inputFileExt)) {
+	if !yeestrings.IsInSlice(allowExt, strings.ToLower(inputFileExt)) {
 		info.Err = err
 		checkErr(err)
 		return UploadReturnInfo{Err: errors.New("文件后缀不被允许")}
@@ -216,7 +214,7 @@ func SimpleUpload(request *http.Request, uploadDir, returnPath string, allowExt 
 		checkErr(err)
 	}
 	defer inputFile.Close()
-	outputFileName = yeeCrypto.Md5Hex([]byte(inputFileName))
+	outputFileName = yeecrypto.Md5Hex([]byte(inputFileName))
 	// 根据是否分片上传决定上传策略
 	// 分片上传路径目录
 	var chunksUploadDir string
@@ -252,8 +250,8 @@ func SimpleUpload(request *http.Request, uploadDir, returnPath string, allowExt 
 	}
 	// 根据上传策略修改文件分片计数,合并
 	if len(request.FormValue("chunks")) > 0 {
-		chunks := yeeStrconv.AtoIDefault0(request.FormValue("chunks"))
-		chunkCount := fileCount(filepath.Join(chunksUploadDir, yeeStrconv.FormatInt(chunks)))
+		chunks := yeestrconv.AtoIDefault0(request.FormValue("chunks"))
+		chunkCount := fileCount(filepath.Join(chunksUploadDir, yeestrconv.FormatInt(chunks)))
 		if chunks == chunkCount {
 			outputFilePath, err = mergeChunkFile(chunksUploadDir, uploadDir)
 			if err != nil {
@@ -311,15 +309,15 @@ func fileCount(path string) int {
 		countStr, err := yeeFile.GetString(path)
 		if err != nil {
 			count := 1
-			yeeFile.SetString(path, yeeStrconv.FormatInt(count))
+			yeeFile.SetString(path, yeestrconv.FormatInt(count))
 			return count
 		}
-		count := yeeStrconv.AtoIDefault0(countStr) + 1
-		yeeFile.SetString(path, yeeStrconv.FormatInt(count))
+		count := yeestrconv.AtoIDefault0(countStr) + 1
+		yeeFile.SetString(path, yeestrconv.FormatInt(count))
 		return count
 	}
 	count := 1
-	yeeFile.SetString(path, yeeStrconv.FormatInt(count))
+	yeeFile.SetString(path, yeestrconv.FormatInt(count))
 	return count
 }
 

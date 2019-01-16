@@ -9,7 +9,7 @@ import (
 	"errors"
 	"github.com/vannnnish/easyweb"
 	"github.com/vannnnish/yeego"
-	"github.com/vannnnish/yeego/yeeStrings"
+	"github.com/vannnnish/yeego/yeestrings"
 	"strings"
 )
 
@@ -69,7 +69,7 @@ func (AdminPrivilege) isRightAction(list []string) bool {
 	}
 	right := true
 	for _, v := range list {
-		if !yeeStrings.IsInSlice(getAllActionStr(), v) {
+		if !yeestrings.IsInSlice(getAllActionStr(), v) {
 			right = false
 			break
 		}

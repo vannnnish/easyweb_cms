@@ -8,7 +8,7 @@ package api
 import (
 	"github.com/vannnnish/easyweb"
 	"github.com/vannnnish/easyweb_cms/model"
-	"github.com/vannnnish/yeego/yeeStrconv"
+	"github.com/vannnnish/yeego/yeestrconv"
 )
 
 type Article_Api struct {
@@ -31,8 +31,8 @@ func (article Article_Api) List() easyweb.HandlerFunc {
 			c.FailWithDefaultCode(err.Error())
 			return
 		}
-		count := article.ArticleModel.SelectAllCount(yeeStrconv.AtoIDefault0(cateId), keyword, source, author, isPublish, startTime, endTime)
-		data := article.ArticleModel.SelectAll(yeeStrconv.AtoIDefault0(cateId), keyword, source, author, isPublish, startTime, endTime,
+		count := article.ArticleModel.SelectAllCount(yeestrconv.AtoIDefault0(cateId), keyword, source, author, isPublish, startTime, endTime)
+		data := article.ArticleModel.SelectAll(yeestrconv.AtoIDefault0(cateId), keyword, source, author, isPublish, startTime, endTime,
 			pageSize, (page-1)*pageSize)
 		c.RenderData("data", data)
 		c.RenderData("count", count)
@@ -74,7 +74,7 @@ func (article Article_Api) Create() easyweb.HandlerFunc {
 			return
 		}
 		newArticle := model.Article{
-			CateId:      yeeStrconv.AtoIDefault0(cateId),
+			CateId:      yeestrconv.AtoIDefault0(cateId),
 			Title:       title,
 			Thumb:       thumb,
 			Source:      source,
@@ -138,7 +138,7 @@ func (article Article_Api) Sort() easyweb.HandlerFunc {
 	f := func(c *easyweb.Context) {
 		postData := c.Request().PostForm
 		for k, v := range postData {
-			err := article.ArticleModel.DoSort(yeeStrconv.AtoIDefault0(k), yeeStrconv.AtoIDefault0(v[0]))
+			err := article.ArticleModel.DoSort(yeestrconv.AtoIDefault0(k), yeestrconv.AtoIDefault0(v[0]))
 			if err != nil {
 				c.FailWithDefaultCode(err.Error())
 				return

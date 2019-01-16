@@ -9,8 +9,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/vannnnish/easyweb"
-	"github.com/vannnnish/yeego/yeeCrypto"
-	"github.com/vannnnish/yeego/yeeTime"
+	"github.com/vannnnish/yeego/yeecrypto"
+	"github.com/vannnnish/yeego/yeetime"
 	"time"
 )
 
@@ -40,12 +40,12 @@ func (AdminUser) Login(account, pwd, ip string) error {
 	if err != nil && adminUser.Id == 0 {
 		return errors.New("账号或者密码错误，请重试")
 	}
-	if adminUser.Password != yeeCrypto.Sha256Hex([]byte(pwd)) {
+	if adminUser.Password != yeecrypto.Sha256Hex([]byte(pwd)) {
 		return errors.New("账号或者密码错误，请重试")
 	}
 	adminUser.LoginIP = ip
 	adminUser.LastLoginTime = adminUser.ThisLoginTime
-	adminUser.ThisLoginTime = time.Now().Format(yeeTime.FormatMysql)
+	adminUser.ThisLoginTime = time.Now().Format(yeetime.FormatMysql)
 	defaultDB.Model(&AdminUser{}).Updates(adminUser)
 	return nil
 }
@@ -57,7 +57,7 @@ func (AdminUser) Create(user AdminUser) error {
 	if u.Id != 0 {
 		return errors.New("账号已经存在，请重试")
 	}
-	user.Password = yeeCrypto.Sha256Hex([]byte(user.Password))
+	user.Password = yeecrypto.Sha256Hex([]byte(user.Password))
 	err := defaultDB.Create(&user).Error
 	if err != nil {
 		easyweb.Logger.Error(err.Error())
@@ -152,10 +152,10 @@ func (AdminUser) UpdatePassword(id int, oldPwd, newPwd string) error {
 	if err != nil {
 		return err
 	}
-	if user.Password != yeeCrypto.Sha256Hex([]byte(oldPwd)) {
+	if user.Password != yeecrypto.Sha256Hex([]byte(oldPwd)) {
 		return errors.New("旧密码输入错误，请重试")
 	}
-	err = defaultDB.Model(user).Updates(AdminUser{Password: yeeCrypto.Sha256Hex([]byte(newPwd))}).Error
+	err = defaultDB.Model(user).Updates(AdminUser{Password: yeecrypto.Sha256Hex([]byte(newPwd))}).Error
 	if err != nil {
 		easyweb.Logger.Error(err.Error())
 		return errors.New("修改密码失败,请重试")
@@ -170,7 +170,7 @@ func (AdminUser) ResetPassword(id int, pwd string) error {
 	if err != nil {
 		return err
 	}
-	err = defaultDB.Model(user).Updates(AdminUser{Password: yeeCrypto.Sha256Hex([]byte(pwd))}).Error
+	err = defaultDB.Model(user).Updates(AdminUser{Password: yeecrypto.Sha256Hex([]byte(pwd))}).Error
 	if err != nil {
 		easyweb.Logger.Error(err.Error())
 		return errors.New("重置密码失败,请重试")

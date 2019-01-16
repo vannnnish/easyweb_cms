@@ -8,7 +8,7 @@ package model
 import (
 	"errors"
 	"github.com/vannnnish/easyweb"
-	"github.com/vannnnish/yeego/yeeTime"
+	"github.com/vannnnish/yeego/yeetime"
 	"time"
 )
 
@@ -32,7 +32,7 @@ func (AdminUserToken) CreateOrUpdate(userId int, token string) error {
 		// 不存在
 		adminUserToken.UserId = userId
 		adminUserToken.Token = token
-		adminUserToken.UpdateTime = time.Now().Format(yeeTime.FormatMysql)
+		adminUserToken.UpdateTime = time.Now().Format(yeetime.FormatMysql)
 		err := defaultDB.Create(adminUserToken).Error
 		if err != nil {
 			easyweb.Logger.Error(err.Error())
@@ -42,7 +42,7 @@ func (AdminUserToken) CreateOrUpdate(userId int, token string) error {
 	}
 	// 存在
 	adminUserToken.Token = token
-	adminUserToken.UpdateTime = time.Now().Format(yeeTime.FormatMysql)
+	adminUserToken.UpdateTime = time.Now().Format(yeetime.FormatMysql)
 	err := defaultDB.Save(adminUserToken).Error
 	if err != nil {
 		easyweb.Logger.Error(err.Error())

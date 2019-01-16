@@ -10,11 +10,11 @@ import (
 	"errors"
 	"github.com/vannnnish/easyweb"
 	"github.com/vannnnish/easyweb_cms/conf"
-	"github.com/vannnnish/yeego/yeeCache"
-	"github.com/vannnnish/yeego/yeeSql"
-	"github.com/vannnnish/yeego/yeeStrconv"
-	"github.com/vannnnish/yeego/yeeStrings"
-	"github.com/vannnnish/yeego/yeeTransform"
+	"github.com/vannnnish/yeego/yeecache"
+	"github.com/vannnnish/yeego/yeesql"
+	"github.com/vannnnish/yeego/yeestrconv"
+	"github.com/vannnnish/yeego/yeestrings"
+	"github.com/vannnnish/yeego/yeetransform"
 	"time"
 )
 
@@ -43,8 +43,8 @@ func (Category) SelectOne(category *Category) error {
 
 // 通过缓存查找栏目
 func (Category) SelectOneWithCache(category *Category) error {
-	cacheFileName := conf.CategoryFilePath + yeeStrconv.FormatInt(category.Id) + ".cache"
-	b, err := yeeCache.FileTtlCache(cacheFileName, func() (b []byte, ttl time.Duration, err error) {
+	cacheFileName := conf.CategoryFilePath + yeestrconv.FormatInt(category.Id) + ".cache"
+	b, err := yeecache.FileTtlCache(cacheFileName, func() (b []byte, ttl time.Duration, err error) {
 		err = Category{}.SelectOne(category)
 		if err != nil {
 			return nil, time.Second, err
@@ -94,7 +94,7 @@ func (Category) GetRoleActions(cateId int) string {
 		easyweb.Logger.Error(err.Error())
 		return ""
 	}
-	info, err := yeeSql.RowsToMapSliceFirst(rows)
+	info, err := yeesql.RowsToMapSliceFirst(rows)
 	if err != nil {
 		easyweb.Logger.Error(err.Error())
 		return ""
@@ -136,7 +136,7 @@ func (Category) SelectAll(parentId, roleId int, isRecursion bool) []map[string]i
 			easyweb.Logger.Error(err)
 			return nil
 		}
-		categories = yeeSql.RowsToMapSlice(rows)
+		categories = yeesql.RowsToMapSlice(rows)
 	} else {
 		sql := `
 			SELECT
@@ -166,10 +166,10 @@ func (Category) SelectAll(parentId, roleId int, isRecursion bool) []map[string]i
 			ORDER BY sort DESC, category.id ASC;
 		`
 		rows, _ := defaultDB.Raw(sql, parentId, roleId).Rows()
-		categories = yeeSql.RowsToMapSlice(rows)
+		categories = yeesql.RowsToMapSlice(rows)
 	}
 	for _, category := range categories {
-		pId := yeeStrconv.AtoIDefault0(category["parent_id"])
+		pId := yeestrconv.AtoIDefault0(category["parent_id"])
 		if pId != 0 {
 			parentCate := &Category{Id: pId}
 			Category{}.SelectOneWithCache(parentCate)
@@ -178,10 +178,10 @@ func (Category) SelectAll(parentId, roleId int, isRecursion bool) []map[string]i
 			category["parent_cate_name"] = ""
 		}
 	}
-	data := yeeTransform.MapSliceStringToInterface(categories)
+	data := yeetransform.MapSliceStringToInterface(categories)
 	if isRecursion {
 		for _, v := range data {
-			children := Category{}.SelectAll(yeeStrconv.AtoIDefault0(v["id"].(string)), roleId, isRecursion)
+			children := Category{}.SelectAll(yeestrconv.AtoIDefault0(v["id"].(string)), roleId, isRecursion)
 			if len(children) == 0 {
 				v["children"] = nil
 			} else {
@@ -196,7 +196,7 @@ func (Category) SelectAll(parentId, roleId int, isRecursion bool) []map[string]i
 func (Category) SelectAllWithCache(parentId, roleId int, isRecursion bool) []map[string]interface{} {
 	data := make([]map[string]interface{}, 0)
 	cacheFileName := conf.CategoryFilePath + "all.cache"
-	b, err := yeeCache.FileTtlCache(cacheFileName, func() (b []byte, ttl time.Duration, err error) {
+	b, err := yeecache.FileTtlCache(cacheFileName, func() (b []byte, ttl time.Duration, err error) {
 		data := Category{}.SelectAll(parentId, roleId, isRecursion)
 		b, err = json.Marshal(&data)
 		if err != nil {
@@ -228,7 +228,7 @@ func (Category) Create(category Category) (int, error) {
 	}
 	// 判断模型是否被允许
 	if parentCategory.Contain != "" {
-		allowModels := yeeStrings.StringToIntArray(parentCategory.Contain, ",")
+		allowModels := yeestrings.StringToIntArray(parentCategory.Contain, ",")
 		if len(allowModels) != 0 {
 			allow := false
 			for _, v := range allowModels {
@@ -243,9 +243,9 @@ func (Category) Create(category Category) (int, error) {
 		}
 	}
 	if category.ModelId == conf.DirModelId {
-		containArr := yeeStrings.StringToIntArray(category.Contain, ",")
+		containArr := yeestrings.StringToIntArray(category.Contain, ",")
 		if len(containArr) != 0 {
-			category.Contain = yeeStrings.IntArrayToString(containArr, ",")
+			category.Contain = yeestrings.IntArrayToString(containArr, ",")
 		}
 	}
 	if err := defaultDB.Create(&category).Error; err != nil {

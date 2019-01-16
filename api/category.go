@@ -10,7 +10,7 @@ import (
 	"github.com/vannnnish/easyweb"
 	"github.com/vannnnish/easyweb_cms/conf"
 	"github.com/vannnnish/easyweb_cms/model"
-	"github.com/vannnnish/yeego/yeeStrconv"
+	"github.com/vannnnish/yeego/yeestrconv"
 	"os"
 )
 
@@ -127,7 +127,7 @@ func (cate Category_Api) Sort() easyweb.HandlerFunc {
 	f := func(c *easyweb.Context) {
 		postData := c.Request().PostForm
 		for k, v := range postData {
-			err := cate.CategoryModel.DoSort(yeeStrconv.AtoIDefault0(k), yeeStrconv.AtoIDefault0(v[0]))
+			err := cate.CategoryModel.DoSort(yeestrconv.AtoIDefault0(k), yeestrconv.AtoIDefault0(v[0]))
 			if err != nil {
 				c.FailWithDefaultCode(err.Error())
 				return

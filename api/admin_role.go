@@ -8,7 +8,7 @@ package api
 import (
 	"github.com/vannnnish/easyweb"
 	"github.com/vannnnish/easyweb_cms/model"
-	"github.com/vannnnish/yeego/yeeStrconv"
+	"github.com/vannnnish/yeego/yeestrconv"
 )
 
 type AdminRole_Api struct {
@@ -118,7 +118,7 @@ func (adminRole AdminRole_Api) Sort() easyweb.HandlerFunc {
 	f := func(c *easyweb.Context) {
 		postData := c.Request().PostForm
 		for k, v := range postData {
-			err := adminRole.AdminRoleModel.DoSort(yeeStrconv.AtoIDefault0(k), yeeStrconv.AtoIDefault0(v[0]))
+			err := adminRole.AdminRoleModel.DoSort(yeestrconv.AtoIDefault0(k), yeestrconv.AtoIDefault0(v[0]))
 			if err != nil {
 				c.FailWithDefaultCode(err.Error())
 				return

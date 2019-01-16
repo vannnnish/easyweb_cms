@@ -11,9 +11,9 @@ import (
 	"github.com/vannnnish/easyweb_cms/conf"
 	"github.com/vannnnish/easyweb_cms/model"
 	"github.com/vannnnish/yeego"
-	"github.com/vannnnish/yeego/yeeCrypto"
-	"github.com/vannnnish/yeego/yeeStrconv"
-	"github.com/vannnnish/yeego/yeeTransform"
+	"github.com/vannnnish/yeego/yeecrypto"
+	"github.com/vannnnish/yeego/yeestrconv"
+	"github.com/vannnnish/yeego/yeetransform"
 	"net/http"
 	"strings"
 	"time"
@@ -52,7 +52,7 @@ func LoginStateMiddleware() easyweb.HandlerFunc {
 			c.Abort()
 			return
 		}
-		user := model.AdminUser{Id: yeeStrconv.AtoIDefault0(cookieArray[0])}
+		user := model.AdminUser{Id: yeestrconv.AtoIDefault0(cookieArray[0])}
 		err = model.AdminUser{}.SelectOneById(&user)
 		if err != nil {
 			c.SetCookie(&http.Cookie{
@@ -74,7 +74,7 @@ func LoginStateMiddleware() easyweb.HandlerFunc {
 			c.Abort()
 			return
 		}
-		if yeeCrypto.Md5Hex([]byte(user.Password)) != cookieArray[1] {
+		if yeecrypto.Md5Hex([]byte(user.Password)) != cookieArray[1] {
 			c.SetCookie(&http.Cookie{
 				Name:  loginCookie.Name,
 				Value: "",
@@ -87,7 +87,7 @@ func LoginStateMiddleware() easyweb.HandlerFunc {
 		if c.Request().Method == "POST" {
 			c.Request().ParseForm()
 		}
-		c.StoreSet("adminUser", yeeTransform.StructToMap(user))
+		c.StoreSet("adminUser", yeetransform.StructToMap(user))
 		c.StoreSet("adminUserId", user.Id)
 		c.SetCookie(&http.Cookie{
 			Name:    loginCookie.Name,
@@ -110,14 +110,14 @@ func ActionPrepareMiddleware() easyweb.HandlerFunc {
 			c.Abort()
 			return
 		}
-		category := model.Category{Id: yeeStrconv.AtoIDefault0(cateId)}
+		category := model.Category{Id: yeestrconv.AtoIDefault0(cateId)}
 		err := model.Category{}.SelectOneWithCache(&category)
 		if err != nil {
 			c.FailWithDefaultCode(err.Error())
 			c.Abort()
 			return
 		}
-		if category.ModelId != yeeStrconv.AtoIDefault0(modelId) && c.Param("pid").GetInt() != 0 {
+		if category.ModelId != yeestrconv.AtoIDefault0(modelId) && c.Param("pid").GetInt() != 0 {
 			c.FailWithDefaultCode("栏目类型与模型不匹配")
 			c.Abort()
 			return
@@ -137,7 +137,7 @@ func ActionMiddleware() easyweb.HandlerFunc {
 			c.Abort()
 			return
 		}
-		category := model.Category{Id: yeeStrconv.AtoIDefault0(cateId)}
+		category := model.Category{Id: yeestrconv.AtoIDefault0(cateId)}
 		err := model.Category{}.SelectOneWithCache(&category)
 		if err != nil {
 			c.FailWithDefaultCode(err.Error())
@@ -204,10 +204,10 @@ func DispatchMiddleware(dispatchMap map[string]map[int]easyweb.HandlerFunc) easy
 				return
 			}
 		}
-		if action == "list" && modelId == yeeStrconv.FormatInt(conf.DirModelId) {
+		if action == "list" && modelId == yeestrconv.FormatInt(conf.DirModelId) {
 			// 如果是目录类型，则返回子栏目信息
 			subCategories := api.Base{}.Category.CategoryModel.
-				SelectAllWithCache(yeeStrconv.AtoIDefault0(cateId), c.StoreGetMapInterface("adminUser")["RoleId"].(int), false)
+				SelectAllWithCache(yeestrconv.AtoIDefault0(cateId), c.StoreGetMapInterface("adminUser")["RoleId"].(int), false)
 			c.Success(subCategories)
 			c.Abort()
 			return
@@ -226,7 +226,7 @@ func DispatchMiddleware(dispatchMap map[string]map[int]easyweb.HandlerFunc) easy
 			c.Abort()
 			return
 		}
-		function, ok := apiMap[yeeStrconv.AtoIDefault0(modelId)]
+		function, ok := apiMap[yeestrconv.AtoIDefault0(modelId)]
 		if !ok {
 			c.Next()
 		} else {
