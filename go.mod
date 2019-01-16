@@ -15,6 +15,8 @@ require (
 	github.com/smartystreets/assertions v0.0.0-20180927180507-b2de0cb4f26d // indirect
 	github.com/smartystreets/goconvey v0.0.0-20181108003508-044398e4856c // indirect
 	github.com/spf13/cast v1.3.0
-	github.com/vannnnish/easyweb v0.0.0-20190116160145-4bc58eebca8c
-	github.com/vannnnish/yeego v0.0.0-20190116130032-bb3d55c3d688
+	github.com/vannnnish/easyweb v0.0.0-20190116165352-635eb259a7f3
+	github.com/vannnnish/yeego v0.0.0-20190116165236-9af39591b5ea
 )
+
+replace gopkg.in/russross/blackfriday.v2 v2.0.1 => github.com/russross/blackfriday/v2 v2.0.1
